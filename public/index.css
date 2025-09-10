@@ -1,0 +1,52 @@
+.blog-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.blog-post {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-card-border-color);
+}
+
+.blog-post h2 {
+  margin-bottom: 0.5rem;
+}
+
+.blog-post h2 a {
+  text-decoration: none;
+  color: var(--pico-color);
+}
+
+.blog-post h2 a:hover {
+  color: var(--pico-primary);
+}
+
+.blog-post p {
+  margin-bottom: 1rem;
+  color: var(--pico-muted-color);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--pico-muted-color);
+}
+
+.liked-indicator {
+  color: var(--pico-color-red-500);
+}
+
+.not-liked-indicator {
+  color: var(--pico-muted-color);
+}

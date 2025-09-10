@@ -1,0 +1,50 @@
+.post-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--pico-card-border-color);
+}
+
+.post-title {
+  margin-bottom: 0.5rem;
+  color: var(--pico-color);
+}
+
+.post-content {
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--pico-muted-color);
+  margin-top: 1rem;
+}
+
+.liked-indicator {
+  color: var(--pico-color-red-500);
+}
+
+.not-liked-indicator {
+  color: var(--pico-muted-color);
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  text-decoration: none;
+  color: var(--pico-primary);
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

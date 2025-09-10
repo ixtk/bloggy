@@ -3,21 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>My Blog</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="/index.css" />
   </head>
   <body>
-    <!-- ctrl + / -->
-    <!-- ejsout -->
-    <!-- ejseach -->
+    <div class="blog-container">
+      <header class="blog-header">
+        <h1>My Blog</h1>
+      </header>
 
-    <% posts.forEach(post => { %>
-
-    <h2>
-      <a href="/posts/<%= post.id %>"><%= post.name %></a>
-    </h2>
-
-    <p><%= post.text %></p>
-
-    <% }) %>
+      <main>
+        <% posts.forEach(post => { %>
+        <article class="blog-post">
+          <h2>
+            <a href="/posts/<%= post.id %>"><%= post.name %></a>
+          </h2>
+          <p><%= post.text %></p>
+          <div class="post-meta">
+            <span
+              class="<%= post.liked ? 'liked-indicator' : 'not-liked-indicator' %>"
+            >
+              <%= post.liked ? '♥' : '♡' %>
+            </span>
+            <span>Post #<%= post.id %></span>
+          </div>
+        </article>
+        <% }) %>
+      </main>
+    </div>
   </body>
 </html>
