@@ -10,6 +10,10 @@ app.get("/", function (request, response) {
   response.render("index", { posts: blogPosts })
 })
 
+app.get("/posts/create", function (request, response) {
+  response.render("create-post")
+})
+
 app.get("/posts/:postId", function (request, response) {
   const postId = request.params.postId
 
