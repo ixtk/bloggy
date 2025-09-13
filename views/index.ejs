@@ -23,14 +23,6 @@
             <a href="/posts/<%= post.id %>"><%= post.name %></a>
           </h2>
           <p><%= post.text %></p>
-          <div class="post-meta">
-            <span
-              class="<%= post.liked ? 'liked-indicator' : 'not-liked-indicator' %>"
-            >
-              <%= post.liked ? '♥' : '♡' %>
-            </span>
-            <span>Post #<%= post.id %></span>
-          </div>
         </article>
         <% }) %>
       </main>
