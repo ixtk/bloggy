@@ -3,6 +3,7 @@ const express = require("express")
 
 const app = express()
 
+// /posts/7c38b4e289fa
 const blogPosts = [
   {
     id: "a2f9d1c49823",
@@ -35,12 +36,22 @@ app.get("/posts/create", function (request, response) {
   response.render("create-post")
 })
 
+// /posts/7c38b4e289fa
+// /posts/late-night-code
 app.get("/posts/:postId", function (request, response) {
-  const postId = request.params.postId
+  const postId = request.params.postId // 1, 2, 3, a2f9d1c49823
 
-  console.log('User visited post', postId)
+  console.log("User visited post", postId)
 
-  response.render("post", { post: blogPosts[postId - 1] })
+  let foundPost = null
+
+  for (let post of blogPosts) {
+    if (post.id === postId) {
+      foundPost = post
+    }
+  }
+
+  response.render("post", { post: foundPost })
 })
 
 /*
