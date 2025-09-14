@@ -1,4 +1,6 @@
 const express = require("express")
+const crypto = require("crypto")
+
 // const blogPosts = require('./posts.json')
 
 const app = express()
@@ -27,6 +29,7 @@ const blogPosts = [
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
+app.use(express.urlencoded({ extended: true }))
 
 app.get("/", function (request, response) {
   response.render("index", { posts: blogPosts })
@@ -34,6 +37,22 @@ app.get("/", function (request, response) {
 
 app.get("/posts/create", function (request, response) {
   response.render("create-post")
+})
+
+app.post("/posts/create", function (request, response) {
+  // title, text
+  const newPostValues = request.body
+
+  const newPostId = crypto.randomBytes(6).toString('hex')
+
+  blogPosts.push({
+    id: newPostId,
+    name: newPostValues.title,
+    text: newPostValues.text,
+    liked: false
+  })
+
+  response.redirect(`/posts/${newPostId}`)
 })
 
 // /posts/7c38b4e289fa

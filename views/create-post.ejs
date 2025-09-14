@@ -17,9 +17,10 @@
       </header>
 
       <main>
-        <form class="create-post-form">
+        <form action="/posts/create" method="POST" class="create-post-form">
           <input name="title" type="text" placeholder="Some interesting title..." />
           <textarea name="text" placeholder="My interesting blog..."></textarea>
+          <button>Save</button>
         </form>
 
         <a href="/" class="back-link">← Back to all posts</a>
