@@ -1,7 +1,28 @@
 const express = require("express")
-const blogPosts = require('./posts.json')
+// const blogPosts = require('./posts.json')
 
 const app = express()
+
+const blogPosts = [
+  {
+    id: "a2f9d1c49823",
+    name: "Coffee Morning",
+    text: "Tried a new café downtown today, best cappuccino I’ve had in months.",
+    liked: true
+  },
+  {
+    id: "7c38b4e289fa",
+    name: "Late Night Code",
+    text: "Finally fixed that stubborn bug after three hours… victory tastes sweet.",
+    liked: false
+  },
+  {
+    id: "f4b82a7a1e39",
+    name: "Sunday Hike",
+    text: "Went hiking on the Pine Ridge trail. The view from the top was unreal.",
+    liked: true
+  }
+]
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
