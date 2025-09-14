@@ -43,7 +43,7 @@ app.post("/posts/create", function (request, response) {
   // title, text
   const newPostValues = request.body
 
-  const newPostId = crypto.randomBytes(6).toString('hex')
+  const newPostId = crypto.randomBytes(6).toString("hex")
 
   blogPosts.push({
     id: newPostId,
@@ -55,7 +55,7 @@ app.post("/posts/create", function (request, response) {
   response.redirect(`/posts/${newPostId}`)
 })
 
-// /posts/7c38b4e289fa
+// /posts/abc
 // /posts/late-night-code
 app.get("/posts/:postId", function (request, response) {
   const postId = request.params.postId // 1, 2, 3, a2f9d1c49823
@@ -72,6 +72,10 @@ app.get("/posts/:postId", function (request, response) {
 
   response.render("post", { post: foundPost })
 })
+
+// app.get("*", function (request, response) {
+//   response.send("<h1>Page not found</h1>")
+// })
 
 /*
 app.get("/posts/1", function (request, response) {

@@ -1,0 +1,56 @@
+/* Shared header styles */
+.site-header {
+  background: var(--pico-card-background-color);
+  border-bottom: 1px solid var(--pico-card-border-color);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.site-header .container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--pico-color);
+}
+
+.site-title:hover {
+  color: var(--pico-primary);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--pico-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.site-nav a:hover {
+  background-color: var(--pico-card-border-color);
+  color: var(--pico-primary);
+}
+
+.site-nav .primary-button {
+  background-color: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+}
+
+.site-nav .primary-button:hover {
+  background-color: var(--pico-primary-hover);
+  color: var(--pico-primary-inverse);
+}

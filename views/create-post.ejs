@@ -8,9 +8,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
+    <link rel="stylesheet" href="/header.css" />
     <link rel="stylesheet" href="/create-post.css" />
   </head>
   <body>
+    <%- include('header') %>
+    
     <div class="create-post-container">
       <header class="create-post-header">
         <h1>Create a new post</h1>
@@ -18,7 +21,11 @@
 
       <main>
         <form action="/posts/create" method="POST" class="create-post-form">
-          <input name="title" type="text" placeholder="Some interesting title..." />
+          <input
+            name="title"
+            type="text"
+            placeholder="Some interesting title..."
+          />
           <textarea name="text" placeholder="My interesting blog..."></textarea>
           <button>Save</button>
         </form>
