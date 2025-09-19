@@ -1,0 +1,18 @@
+:root {
+  --pico-form-element-spacing-vertical: 5px;
+  --pico-form-element-spacing-horizontal: 15px;
+}
+
+/* საერთო სტილები */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.primary-button {
+  background: #0057b8;
+  color: #fff;
+  border-radius: 6px;
+  :root {
+  border: none;

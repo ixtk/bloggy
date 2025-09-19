@@ -1,77 +1,73 @@
-const express = require("express")
-const crypto = require("crypto")
-const mongoose = require("mongoose")
+// დაინსტალურებული ბიბლიოთეკების ჩატვირთვა
+const express = require("express") // Express - ვებ სერვერის ბიბლიოთეკა
+const mongoose = require("mongoose") // Mongoose - მონაცემთა ბაზასთან მუშაობის ბიბლიოთეკა
 
+// პოსტის სქემა, განსაზღვრავს მონაცემთა სტრუქტურას
 const postSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  text: { type: String, required: true },
-  liked: { type: Boolean, required: true, default: false }
+  name: { type: String, required: true, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
+  text: { type: String, required: true }, // ტექსტის ტიპი, სავალდებულო
+  liked: { type: Boolean, required: true, default: false } // Boolean ტიპი (კი ან არა), სავალდებულო, ნაგულისხმევად false
 })
 
+// მოდელის შექმნა სქემის მიხედვით
 const Post = mongoose.model("Post", postSchema)
 
+// აპლიკაციის ობიექტის შექმნა
 const app = express()
 
+// EJS შაბლონების გამოყენება
 app.set("view engine", "ejs")
+
+// სტატიკური ფაილების (სურათები, CSS, JS) შეინახება public ფოლდერში
 app.use(express.static("public"))
+
+// ფორმის მონაცემების წასაკითხად
 app.use(express.urlencoded({ extended: true }))
 
+// მთავარი გვერდი, ყველა პოსტის ჩვენება
 app.get("/", async function (request, response) {
-  const allPosts = await Post.find()
+  const allPosts = await Post.find() // ყველა პოსტის წამოღება ბაზიდან
 
-  console.log(allPosts)
+  console.log(allPosts) // კონსოლში ყველა პოსტის გამოჩენა
 
+  // index შაბლონის გამოჩენა და post მნიშვნელობის გადაცემა
   response.render("index", { posts: allPosts })
 })
 
+// ახალი პოსტის შექმნის გვერდი
 app.get("/posts/create", function (request, response) {
+  // create-post შაბლონის გამოჩენა
   response.render("create-post")
 })
 
+// ახალი პოსტის შენახვა ბაზაში (გვერდი არ არის)
 app.post("/posts/create", async function (request, response) {
-  // title, text
+  // ფორმის მონაცემები, რაც მომხმარებელმა შეავსო input ველებში
   const newPostValues = request.body
 
   const newPost = await Post.create({
-    name: newPostValues.title,
-    text: newPostValues.text,
-    liked: false
+    name: newPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
+    text: newPostValues.text // ტექსტი (.text არის input ველის name ატრიბუტი)
   })
 
+  // გადამისამართება ახალი პოსტის გვერდზე
   response.redirect(`/posts/${newPost.id}`)
 })
 
-// /posts/abc
-// /posts/late-night-code
+// კონკრეტული პოსტის გვერდი
 app.get("/posts/:postId", async function (request, response) {
-  const postId = request.params.postId // 1, 2, 3, a2f9d1c49823
+  const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
 
   console.log("User visited post", postId)
 
-  let foundPost = await Post.findById(postId)
+  let foundPost = await Post.findById(postId) // პოსტის მოძებნა ID-ით
 
+  // post შაბლონის გამოჩენა და მოძებნილი post მნიშვნელობის გადაცემა
   response.render("post", { post: foundPost })
 })
 
-// app.get("*", function (request, response) {
-//   response.send("<h1>Page not found</h1>")
-// })
-
-/*
-app.get("/posts/1", function (request, response) {
-  response.render("post", { post: blogPosts[0] })
-})
-
-app.get("/posts/2", function (request, response) {
-  response.render("post", { post: blogPosts[1] })
-})
-
-app.get("/posts/3", function (request, response) {
-  response.render("post", { post: blogPosts[2] })
-})
-*/
-
+// მონაცემთა ბაზასთან დაკავშირება
 mongoose.connect("mongodb://localhost:27017/bloggy")
 
-// localhost:3000
+// სერვერის გაშვება 3000 პორტზე (localhost:3000)
 app.listen(3000)

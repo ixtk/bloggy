@@ -1,34 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><% if (post) { %><%= post.name %> - <% } %>My Blog</title>
+    <title><% if (post) { %><%= post.name %> - <% } %>Bloggy</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
+    <link rel="stylesheet" href="/global.css" />
     <link rel="stylesheet" href="/header.css" />
     <link rel="stylesheet" href="/post.css" />
   </head>
   <body>
+    <!-- Header-ის ჩასმა -->
     <%- include('header') %>
 
     <div class="post-container">
       <% if (post === null) { %>
-      <h1>Post not found</h1>
+      <!-- თუ პოსტი ვერ მოიძებნა -->
+      <h1>პოსტი ვერ მოიძებნა</h1>
       <% } else { %>
+      <!-- სხვა შემთხვევაში -->
       <article>
         <header class="post-header">
+          <!-- პოსტის სათაური -->
           <h1 class="post-title"><%= post.name %></h1>
         </header>
         <div class="post-content">
+          <!-- პოსტის ტექსტი -->
           <p><%= post.text %></p>
         </div>
       </article>
       <% } %>
 
-      <a href="/" class="back-link">← Back to all posts</a>
+      <!-- დაბრუნება მთავარ გვერდზე -->
+      <a href="/">← ყველა პოსტი</a>
     </div>
   </body>
 </html>
