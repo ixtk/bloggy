@@ -50,3 +50,16 @@
 .not-liked-indicator {
   color: var(--pico-muted-color);
 }
+
+.grid-view main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.grid-view .blog-post {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 18px;
+  background: var(--pico-background-color, #fff);
+}
