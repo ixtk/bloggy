@@ -18,17 +18,23 @@
 
     <div class="blog-container">
       <main>
-        <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
-        <% posts.forEach(post => { %>
-        <article class="blog-post">
-          <h2>
-            <!-- პოსტის სათაური და ბმული -->
-            <a href="/posts/<%= post.id %>"><%= post.name %></a>
-          </h2>
-          <!-- პოსტის ტექსტი -->
-          <p><%= post.text %></p>
-        </article>
-        <% }) %>
+        <% if (posts.length === 0) { %>
+          <p>პოსტები არ მოიძებნა</p>
+        <% } else { %>
+          <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
+          <% posts.forEach(post => { %>
+          <article class="blog-post">
+            <h2>
+              <!-- პოსტის სათაური და ბმული -->
+              <a href="/posts/<%= post.id %>"><%= post.name %></a>
+            </h2>
+            <!-- პოსტის ტექსტი -->
+            <p><%= post.text %></p>
+          </article>
+          <% }) %>
+        <% } %>
+
+        
       </main>
     </div>
   </body>

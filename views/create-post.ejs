@@ -26,11 +26,13 @@
         <!-- action ატრიბუტის მისამართის მიხედვით server.js-ში მოთხოვნის გაგზავნა -->
         <form action="/posts/create" method="POST" class="create-post-form">
           <!-- name ატრიბუტი აუცილებელია -->
-          <input name="title" type="text" placeholder="სათაური..." />
+          <input name="title" required minlength="4" type="text" placeholder="სათაური..." />
 
           <!-- name ატრიბუტი აუცილებელია -->
           <textarea
             name="text"
+            required
+            minlength="20"
             placeholder="შეიყვანეთ ბლოგის ტექსტი..."
           ></textarea>
           <button>შენახვა</button>

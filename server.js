@@ -4,8 +4,8 @@ const mongoose = require("mongoose") // Mongoose - მონაცემთა �
 
 // პოსტის სქემა, განსაზღვრავს მონაცემთა სტრუქტურას
 const postSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
-  text: { type: String, required: true }, // ტექსტის ტიპი, სავალდებულო
+  name: { type: String, required: true, minLength: 4, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
+  text: { type: String, required: true, minLength: 20 }, // ტექსტის ტიპი, სავალდებულო
   liked: { type: Boolean, required: true, default: false } // Boolean ტიპი (კი ან არა), სავალდებულო, ნაგულისხმევად false
 })
 
@@ -64,6 +64,21 @@ app.get("/posts/:postId", async function (request, response) {
 
   // post შაბლონის გამოჩენა და მოძებნილი post მნიშვნელობის გადაცემა
   response.render("post", { post: foundPost })
+})
+
+// კონკრეტული პოსტის წაშლის მისამართი
+app.post("/posts/:postId/delete", async function (request, response) {
+  const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
+
+  // const foundPost = await Post.findById(postId)
+
+  // foundPost.deleteOne()
+
+  // await Post.deleteOne({ _id: postId })
+
+  await Post.findByIdAndDelete(postId)
+
+  response.redirect("/")
 })
 
 // მონაცემთა ბაზასთან დაკავშირება

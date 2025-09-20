@@ -31,9 +31,12 @@
           <!-- პოსტის ტექსტი -->
           <p><%= post.text %></p>
         </div>
+
+        <form action="/posts/<%= post.id %>/delete" method="POST">
+          <button>წაშლა</button>
+        </form>
       </article>
       <% } %>
-
       <!-- დაბრუნება მთავარ გვერდზე -->
       <a href="/">← ყველა პოსტი</a>
     </div>
