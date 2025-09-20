@@ -21,6 +21,8 @@
         <% if (posts.length === 0) { %>
           <p>პოსტები არ მოიძებნა</p>
         <% } else { %>
+          <button class="view-btn">Toggle Grid View</button>
+
           <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
           <% posts.forEach(post => { %>
           <article class="blog-post">
@@ -33,9 +35,8 @@
           </article>
           <% }) %>
         <% } %>
-
-        
       </main>
     </div>
+    <script src="/index.js"></script>
   </body>
 </html>
