@@ -35,6 +35,17 @@
         <form action="/posts/<%= post.id %>/delete" method="POST">
           <button>წაშლა</button>
         </form>
+
+        <!-- მოწონების მოქმედება -->
+        <form action="/posts/<%= post.id %>/like" method="POST">
+          <button>
+            <% if (post.liked) { %>
+              💗
+            <% } else { %>
+              🤍
+            <% } %>
+          </button>
+        </form>
       </article>
       <% } %>
       <!-- დაბრუნება მთავარ გვერდზე -->

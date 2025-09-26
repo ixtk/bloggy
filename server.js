@@ -81,6 +81,19 @@ app.post("/posts/:postId/delete", async function (request, response) {
   response.redirect("/")
 })
 
+// კონკრეტული პოსტის მოწონების მისამართი
+app.post("/posts/:postId/like", async function (request, response) {
+  const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
+
+  const post = await Post.findById(postId) // პოსტის მოძებნა ID-ით
+
+  post.liked = !post.liked
+
+  await post.save()
+
+  response.redirect(`/posts/${postId}`)
+})
+
 // მონაცემთა ბაზასთან დაკავშირება
 mongoose.connect("mongodb://localhost:27017/bloggy")
 
