@@ -16,14 +16,15 @@
     <!-- Header-ის ჩასმა -->
     <%- include('header') %>
 
-    <div class="blog-container">
+    <div class="container">
       <main>
         <% if (posts.length === 0) { %>
-          <p>პოსტები არ მოიძებნა</p>
+        <p>პოსტები არ მოიძებნა</p>
         <% } else { %>
-          <button class="view-btn">Toggle Grid View</button>
+        <button class="view-btn" style="margin-bottom: 1rem;">განლაგების შეცვლა</button>
 
-          <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
+        <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
+        <div class="blog-container">
           <% posts.forEach(post => { %>
           <article class="blog-post">
             <h2>
@@ -34,6 +35,7 @@
             <p><%= post.text %></p>
           </article>
           <% }) %>
+        </div>
         <% } %>
       </main>
     </div>

@@ -16,7 +16,7 @@
     <!-- Header-ის ჩასმა -->
     <%- include('header') %>
 
-    <div class="post-container">
+    <div class="container">
       <% if (post === null) { %>
       <!-- თუ პოსტი ვერ მოიძებნა -->
       <h1>პოსტი ვერ მოიძებნა</h1>
@@ -32,20 +32,18 @@
           <p><%= post.text %></p>
         </div>
 
-        <form action="/posts/<%= post.id %>/delete" method="POST">
-          <button>წაშლა</button>
-        </form>
+        <div class="post-buttons">
+          <form action="/posts/<%= post.id %>/delete" method="POST">
+            <button>წაშლა</button>
+          </form>
 
-        <!-- მოწონების მოქმედება -->
-        <form action="/posts/<%= post.id %>/like" method="POST">
-          <button>
-            <% if (post.liked) { %>
-              💗
-            <% } else { %>
-              🤍
-            <% } %>
-          </button>
-        </form>
+          <!-- მოწონების მოქმედება -->
+          <form action="/posts/<%= post.id %>/like" method="POST">
+            <button class="outline">
+              <% if (post.liked) { %> 💗 <% } else { %> 🤍 <% } %>
+            </button>
+          </form>
+        </div>
       </article>
       <% } %>
       <!-- დაბრუნება მთავარ გვერდზე -->

@@ -9,6 +9,11 @@
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--pico-card-border-color);
 }
+.post-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 
 .post-title {
   margin-bottom: 0.5rem;
