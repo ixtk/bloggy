@@ -13,8 +13,14 @@ const postSchema = mongoose.Schema({
   views: { type: Number, required: true, default: 0 } // რიცხვის ტიპი, სავალდებულო, ნაგულისხმევად 0
 })
 
+const userSchema = mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+})
+
 // მოდელის შექმნა სქემის მიხედვით
 const Post = mongoose.model("Post", postSchema)
+const User = mongoose.model("User", userSchema)
 
 // აპლიკაციის ობიექტის შექმნა
 const app = express()
@@ -65,7 +71,7 @@ app.get("/posts/:postId", async function (request, response) {
   console.log("User visited post", postId)
 
   let foundPost = await Post.findById(postId) // პოსტის მოძებნა ID-ით
-  
+
   foundPost.views = foundPost.views + 1
 
   await foundPost.save()
