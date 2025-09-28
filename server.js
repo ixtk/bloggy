@@ -6,7 +6,8 @@ const mongoose = require("mongoose") // Mongoose - მონაცემთა �
 const postSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 4, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
   text: { type: String, required: true, minLength: 20 }, // ტექსტის ტიპი, სავალდებულო
-  liked: { type: Boolean, required: true, default: false } // Boolean ტიპი (კი ან არა), სავალდებულო, ნაგულისხმევად false
+  liked: { type: Boolean, required: true, default: false }, // Boolean ტიპი (კი ან არა), სავალდებულო, ნაგულისხმევად false
+  views: { type: Number, required: true, default: 0 } // რიცხვის ტიპი, სავალდებულო, ნაგულისხმევად 0
 })
 
 // მოდელის შექმნა სქემის მიხედვით
@@ -61,7 +62,11 @@ app.get("/posts/:postId", async function (request, response) {
   console.log("User visited post", postId)
 
   let foundPost = await Post.findById(postId) // პოსტის მოძებნა ID-ით
+  
+  foundPost.views = foundPost.views + 1
 
+  await foundPost.save()
+  
   // post შაბლონის გამოჩენა და მოძებნილი post მნიშვნელობის გადაცემა
   response.render("post", { post: foundPost })
 })
