@@ -2,6 +2,9 @@
 const express = require("express") // Express - ვებ სერვერის ბიბლიოთეკა
 const mongoose = require("mongoose") // Mongoose - მონაცემთა ბაზასთან მუშაობის ბიბლიოთეკა
 
+const dotenv = require("dotenv") // Dotenv - გარემოს ცვლადების ჩატვირთვის ბიბლიოთეკა
+dotenv.config() // .env ფაილიდან გარემოს ცვლადების ჩატვირთვა
+
 // პოსტის სქემა, განსაზღვრავს მონაცემთა სტრუქტურას
 const postSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 4, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
@@ -66,7 +69,7 @@ app.get("/posts/:postId", async function (request, response) {
   foundPost.views = foundPost.views + 1
 
   await foundPost.save()
-  
+
   // post შაბლონის გამოჩენა და მოძებნილი post მნიშვნელობის გადაცემა
   response.render("post", { post: foundPost })
 })
@@ -100,7 +103,6 @@ app.post("/posts/:postId/like", async function (request, response) {
 })
 
 // მონაცემთა ბაზასთან დაკავშირება
-mongoose.connect("mongodb://localhost:27017/bloggy")
+mongoose.connect(process.env.MONGODB_URL)
 
-// სერვერის გაშვება 3000 პორტზე (localhost:3000)
-app.listen(3000)
+app.listen(process.env.PORT)
