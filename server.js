@@ -115,8 +115,32 @@ app.get("/posts/:postId/edit", async function (request, response) {
 
   response.render("edit-post", {
     name: foundPost.name,
-    text: foundPost.text
+    text: foundPost.text,
+    postId: foundPost.id
   })
+})
+
+/*
+
+// შემოკლებული ვერსია
+app.post("/posts/:postId/edit", async (req, res) => {
+  await Post.findByIdAndUpdate(req.params.postId, req.body)
+  res.redirect("/posts/" + req.params.postId)
+})
+*/
+
+app.post("/posts/:postId/edit", async function (request, response) {
+  // ფორმის მონაცემები, რაც მომხმარებელმა შეავსო input ველებში
+  const postId = request.params.postId
+  const editPostValues = request.body
+
+  await Post.findByIdAndUpdate(postId, {
+    name: editPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
+    text: editPostValues.text // ტექსტი (.text არის input ველის name ატრიბუტი)
+  })
+
+  // გადამისამართება ახალი პოსტის გვერდზე
+  response.redirect(`/posts/${postId}`)
 })
 
 // მონაცემთა ბაზასთან დაკავშირება

@@ -24,7 +24,7 @@
       <main>
         <!-- ახალი პოსტის შექმნის ფორმა -->
         <!-- action ატრიბუტის მისამართის მიხედვით server.js-ში მოთხოვნის გაგზავნა -->
-        <form action="/posts/create" method="POST" class="create-post-form">
+        <form action="/posts/<%= postId %>/edit" method="POST" class="create-post-form">
           <!-- name ატრიბუტი აუცილებელია -->
           <input
             value="<%= name %>"
