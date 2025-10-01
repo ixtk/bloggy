@@ -108,6 +108,17 @@ app.post("/posts/:postId/like", async function (request, response) {
   response.redirect(`/posts/${postId}`)
 })
 
+app.get("/posts/:postId/edit", async function (request, response) {
+  const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
+
+  const foundPost = await Post.findById(postId)
+
+  response.render("edit-post", {
+    name: foundPost.name,
+    text: foundPost.text
+  })
+})
+
 // მონაცემთა ბაზასთან დაკავშირება
 mongoose.connect(process.env.MONGODB_URL)
 
