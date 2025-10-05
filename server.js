@@ -5,6 +5,8 @@ const mongoose = require("mongoose") // Mongoose - მონაცემთა �
 const dotenv = require("dotenv") // Dotenv - გარემოს ცვლადების ჩატვირთვის ბიბლიოთეკა
 dotenv.config() // .env ფაილიდან გარემოს ცვლადების ჩატვირთვა
 
+const bcrypt = require('bcrypt')
+
 // პოსტის სქემა, განსაზღვრავს მონაცემთა სტრუქტურას
 const postSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 4, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
@@ -38,7 +40,7 @@ app.use(express.urlencoded({ extended: true }))
 app.get("/", async function (request, response) {
   const allPosts = await Post.find() // ყველა პოსტის წამოღება ბაზიდან
 
-  console.log(allPosts) // კონსოლში ყველა პოსტის გამოჩენა
+  // console.log(allPosts) // კონსოლში ყველა პოსტის გამოჩენა
 
   // index შაბლონის გამოჩენა და post მნიშვნელობის გადაცემა
   response.render("index", { posts: allPosts })
@@ -141,6 +143,54 @@ app.post("/posts/:postId/edit", async function (request, response) {
 
   // გადამისამართება ახალი პოსტის გვერდზე
   response.redirect(`/posts/${postId}`)
+})
+
+app.get("/login", async function (request, response) {
+  response.render("login")
+})
+
+app.get("/register", async function (request, response) {
+  response.render("register")
+})
+
+app.post("/register", async function (request, response) {
+  const password = request.body.password
+  const username = request.body.username
+  const confirmPassword = request.body.confirmPassword
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  if (password !== confirmPassword) {
+    return response.send("პაროლები ერთმანეთს არ ემთხვევა")
+  }
+
+  const newUser = await User.create({
+    password: hashedPassword,
+    username: username
+  })
+
+  console.log(newUser)
+
+  response.redirect('/')
+})
+
+app.post("/login", async function (request, response) {
+  const password = request.body.password // tomatoma
+  const username = request.body.username
+
+  // is user registered with the username
+  const user = await User.findOne({ username: username })
+
+  if (user === null) {
+    return response.send("მომხმარებელი არ მოიძებნა")
+  }
+
+  // tomatoma / $2b$10$s2bAO9zQzTevAUnCZ/9ue.BFMbfPg1PmSj.H25S54AhLc3kyoQvby"
+  if (await bcrypt.compare(password, user.password)) {
+    console.log("Login successfull")
+    return response.redirect("/")
+  } else {
+    return response.send("პაროლი არასწორია")
+  }
 })
 
 // მონაცემთა ბაზასთან დაკავშირება
