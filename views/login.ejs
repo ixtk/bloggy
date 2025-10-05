@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>შესვლა - ჩემი ბლოგი</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/header.css" />
+  </head>
+  <body>
+    <!-- Header-ის ჩასმა -->
+    <%- include('header') %>
+
+    <main class="container">
+      <article style="max-width: 500px; margin: 2rem auto">
+        <header>
+          <h1>შესვლა</h1>
+          <p>შედით თქვენს ანგარიშში</p>
+        </header>
+
+        <form action="/login" method="POST">
+          <label for="username">
+            მომხმარებლის სახელი
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="მომხმარებლის სახელი"
+              required
+            />
+          </label>
+
+          <label for="password">
+            პაროლი
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="პაროლი"
+              required
+            />
+          </label>
+
+          <button type="submit">შესვლა</button>
+        </form>
+
+        <footer>
+          <p style="text-align: center; margin-top: 1rem">
+            არ გაქვთ ანგარიში? <a href="/register">რეგისტრაცია</a>
+          </p>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
