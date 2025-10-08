@@ -5,7 +5,10 @@ const mongoose = require("mongoose") // Mongoose - მონაცემთა �
 const dotenv = require("dotenv") // Dotenv - გარემოს ცვლადების ჩატვირთვის ბიბლიოთეკა
 dotenv.config() // .env ფაილიდან გარემოს ცვლადების ჩატვირთვა
 
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt")
+
+const session = require("express-session")
+const MongoStore = require("connect-mongo")
 
 // პოსტის სქემა, განსაზღვრავს მონაცემთა სტრუქტურას
 const postSchema = mongoose.Schema({
@@ -36,18 +39,42 @@ app.use(express.static("public"))
 // ფორმის მონაცემების წასაკითხად
 app.use(express.urlencoded({ extended: true }))
 
+app.use(
+  session({
+    secret: "yourSecretKey", // Replace with a strong secret
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URL, // MongoDB connection string
+      collectionName: "sessions", // Collection to store sessions
+      stringify: false
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
+  })
+)
+
 // მთავარი გვერდი, ყველა პოსტის ჩვენება
 app.get("/", async function (request, response) {
   const allPosts = await Post.find() // ყველა პოსტის წამოღება ბაზიდან
 
-  // console.log(allPosts) // კონსოლში ყველა პოსტის გამოჩენა
+  // console.log(request.session.username) // კონსოლში ყველა პოსტის გამოჩენა
 
   // index შაბლონის გამოჩენა და post მნიშვნელობის გადაცემა
-  response.render("index", { posts: allPosts })
+  response.render("index", {
+    posts: allPosts,
+    username: request.session.username
+  })
 })
 
 // ახალი პოსტის შექმნის გვერდი
 app.get("/posts/create", function (request, response) {
+
+  if (request.session.username === undefined) {
+    return response.redirect('/login')
+  }
+
   // create-post შაბლონის გამოჩენა
   response.render("create-post")
 })
@@ -170,7 +197,7 @@ app.post("/register", async function (request, response) {
 
   console.log(newUser)
 
-  response.redirect('/')
+  response.redirect("/")
 })
 
 app.post("/login", async function (request, response) {
@@ -187,6 +214,9 @@ app.post("/login", async function (request, response) {
   // tomatoma / $2b$10$s2bAO9zQzTevAUnCZ/9ue.BFMbfPg1PmSj.H25S54AhLc3kyoQvby"
   if (await bcrypt.compare(password, user.password)) {
     console.log("Login successfull")
+
+    request.session.username = user.username
+
     return response.redirect("/")
   } else {
     return response.send("პაროლი არასწორია")
