@@ -32,13 +32,17 @@
           <p><%= post.text %></p>
         </div>
 
+        <p>ავტორი: <%= post.author !== undefined ? post.author : "ანონიმური" %></p>
         <div class="post-buttons">
-          <form action="/posts/<%= post.id %>/delete" method="POST">
-            <button>წაშლა</button>
-          </form>
 
-          <!-- /posts/3657576576/edit -->
-          <a href="/posts/<%= post.id %>/edit">რედაქტირება</a>
+          <% if (post.author === username) { %>
+            <form action="/posts/<%= post.id %>/delete" method="POST">
+              <button>წაშლა</button>
+            </form>
+
+            <!-- /posts/3657576576/edit -->
+            <a href="/posts/<%= post.id %>/edit">რედაქტირება</a>
+          <% } %>
 
           <!-- მოწონების მოქმედება -->
           <form action="/posts/<%= post.id %>/like" method="POST">

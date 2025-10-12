@@ -15,7 +15,8 @@ const postSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 4, unique: true }, // ტექსტის ტიპი, სავალდებულო და უნიკალური
   text: { type: String, required: true, minLength: 20 }, // ტექსტის ტიპი, სავალდებულო
   liked: { type: Boolean, required: true, default: false }, // Boolean ტიპი (კი ან არა), სავალდებულო, ნაგულისხმევად false
-  views: { type: Number, required: true, default: 0 } // რიცხვის ტიპი, სავალდებულო, ნაგულისხმევად 0
+  views: { type: Number, required: true, default: 0 }, // რიცხვის ტიპი, სავალდებულო, ნაგულისხმევად 0
+  author: { type: String, required: false }
 })
 
 const userSchema = mongoose.Schema({
@@ -93,7 +94,8 @@ app.post("/posts/create", async function (request, response) {
 
   const newPost = await Post.create({
     name: newPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
-    text: newPostValues.text // ტექსტი (.text არის input ველის name ატრიბუტი)
+    text: newPostValues.text, // ტექსტი (.text არის input ველის name ატრიბუტი)
+    author: request.session.username
   })
 
   // გადამისამართება ახალი პოსტის გვერდზე
@@ -183,10 +185,15 @@ app.post("/posts/:postId/edit", async function (request, response) {
     return response.redirect("/login")
   }
 
-  await Post.findByIdAndUpdate(postId, {
-    name: editPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
-    text: editPostValues.text // ტექსტი (.text არის input ველის name ატრიბუტი)
-  })
+  const post = await Post.findById(postId)
+
+  if (post.author === request.session.username) {
+    post.name = editPostValues.title
+    post.text = editPostValues.text
+    await post.save()
+  } else {
+    return res.send("ამ მოქმედების უფლება არ გაქვთ")
+  }
 
   // გადამისამართება ახალი პოსტის გვერდზე
   response.redirect(`/posts/${postId}`)
