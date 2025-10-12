@@ -55,6 +55,11 @@ app.use(
   })
 )
 
+app.use(function (request, response, next) {
+  response.locals.username = request.session.username
+  next()
+})
+
 // მთავარი გვერდი, ყველა პოსტის ჩვენება
 app.get("/", async function (request, response) {
   const allPosts = await Post.find() // ყველა პოსტის წამოღება ბაზიდან
@@ -63,8 +68,7 @@ app.get("/", async function (request, response) {
 
   // index შაბლონის გამოჩენა და post მნიშვნელობის გადაცემა
   response.render("index", {
-    posts: allPosts,
-    username: request.session.username
+    posts: allPosts
   })
 })
 
@@ -239,9 +243,9 @@ app.post("/login", async function (request, response) {
   }
 })
 
-app.get('/logout', async function (request, response) {
+app.get("/logout", async function (request, response) {
   request.session.destroy()
-  response.redirect('/')
+  response.redirect("/")
 })
 
 // მონაცემთა ბაზასთან დაკავშირება

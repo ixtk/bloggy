@@ -14,7 +14,7 @@
   </head>
   <body>
     <!-- Header-ის ჩასმა -->
-    <%- include('header', { username: "test user" }) %>
+    <%- include('header') %>
 
     <div class="container">
       <main>
@@ -22,8 +22,9 @@
         <p>პოსტები არ მოიძებნა</p>
         <% } else { %>
 
-        <p><%= username %></p>
-        <button class="view-btn" style="margin-bottom: 1rem;">განლაგების შეცვლა</button>
+        <button class="view-btn" style="margin-bottom: 1rem">
+          განლაგების შეცვლა
+        </button>
 
         <!-- თითოეული პოსტისთვის posts სიაში article თაგის გამოჩენა -->
         <div class="blog-container">
