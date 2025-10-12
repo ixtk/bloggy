@@ -239,6 +239,11 @@ app.post("/login", async function (request, response) {
   }
 })
 
+app.get('/logout', async function (request, response) {
+  request.session.destroy()
+  response.redirect('/')
+})
+
 // მონაცემთა ბაზასთან დაკავშირება
 mongoose.connect(process.env.MONGODB_URL)
 

@@ -3,9 +3,15 @@
     <a href="/" class="site-title">Bloggy</a>
     <nav class="site-nav">
       <a href="/">მთავარი</a>
-      <a href="/posts/create" class="primary-button">პოსტის დამატება</a>
-      <a href="/login">შესვლა</a>
-      <a href="/register">რეგისტრაცია</a>
+
+      <!-- "test user" !== undefined -->
+      <% if (username !== undefined) { %>
+        <a href="/posts/create" class="primary-button">პოსტის დამატება</a>
+        <a href="/logout">გამოსვლა</a>
+      <% } else { %>
+        <a href="/login">შესვლა</a>
+        <a href="/register">რეგისტრაცია</a>
+      <% } %>
     </nav>
   </div>
 </header>
