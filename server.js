@@ -70,9 +70,8 @@ app.get("/", async function (request, response) {
 
 // ახალი პოსტის შექმნის გვერდი
 app.get("/posts/create", function (request, response) {
-
   if (request.session.username === undefined) {
-    return response.redirect('/login')
+    return response.redirect("/login")
   }
 
   // create-post შაბლონის გამოჩენა
@@ -83,6 +82,10 @@ app.get("/posts/create", function (request, response) {
 app.post("/posts/create", async function (request, response) {
   // ფორმის მონაცემები, რაც მომხმარებელმა შეავსო input ველებში
   const newPostValues = request.body
+
+  if (request.session.username === undefined) {
+    return response.redirect("/login")
+  }
 
   const newPost = await Post.create({
     name: newPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
@@ -113,6 +116,10 @@ app.get("/posts/:postId", async function (request, response) {
 app.post("/posts/:postId/delete", async function (request, response) {
   const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
 
+  if (request.session.username === undefined) {
+    return response.redirect("/login")
+  }
+
   // const foundPost = await Post.findById(postId)
 
   // foundPost.deleteOne()
@@ -137,8 +144,13 @@ app.post("/posts/:postId/like", async function (request, response) {
   response.redirect(`/posts/${postId}`)
 })
 
+// კონკრეტული პოსტის დარედაქტირების მისამართი
 app.get("/posts/:postId/edit", async function (request, response) {
   const postId = request.params.postId // პოსტის უნიკალური ID, რასაც URL-ში იწერება
+
+  if (request.session.username === undefined) {
+    return response.redirect("/login")
+  }
 
   const foundPost = await Post.findById(postId)
 
@@ -162,6 +174,10 @@ app.post("/posts/:postId/edit", async function (request, response) {
   // ფორმის მონაცემები, რაც მომხმარებელმა შეავსო input ველებში
   const postId = request.params.postId
   const editPostValues = request.body
+
+  if (request.session.username === undefined) {
+    return response.redirect("/login")
+  }
 
   await Post.findByIdAndUpdate(postId, {
     name: editPostValues.title, // სათაური (.title არის input ველის name ატრიბუტი)
